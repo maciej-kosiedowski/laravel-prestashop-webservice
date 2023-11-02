@@ -103,22 +103,6 @@ class PrestashopWebServiceLibrary
     }
 
     /**
-     * Throws exception if prestashop version is not supported
-     * @param int $version The prestashop version
-     * @throws PrestashopWebServiceException
-     */
-    public function isPrestashopVersionSupported($version)
-    {
-        if (version_compare($version, self::PS_COMPATIBLE_VERSION_MIN, '>=') === false ||
-            version_compare($version, self::PS_COMPATIBLE_VERSION_MAX, '<=') === false
-        ) {
-            $exception = 'This library is not compatible with this version of PrestaShop. ';
-            $exception.= 'Please upgrade/downgrade this library';
-            throw new PrestashopWebServiceException($exception);
-        }
-    }
-
-    /**
      * Prepares and validate a CURL request to PrestaShop WebService. Can throw exception.
      * @param string $url Resource name
      * @param mixed $curl_params CURL parameters (sent to curl_set_opt)
@@ -177,7 +161,6 @@ class PrestashopWebServiceLibrary
         }
 
         if (array_key_exists('PSWS-Version', $headerArray)) {
-            $this->isPrestashopVersionSupported($headerArray['PSWS-Version']);
             $this->version = $headerArray['PSWS-Version'];
         }
 
